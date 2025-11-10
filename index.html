@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MelodyHub - Ваш музыкальный гид</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        :root {
+            --primary: #8e44ad;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --gray: #95a5a6;
+            --success: #2ecc71;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(142, 68, 173, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .view-all i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .view-all:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Шапка */
+        header {
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+        
+        /* Герой секция */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 180px 0 100px;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--light);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+        
+        .stat-text {
+            font-size: 1rem;
+            color: var(--light);
+        }
+        
+        /* Новинки */
+        .new-releases {
+            background: white;
+        }
+        
+        .releases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .release-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .release-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .release-cover {
+            width: 100%;
+            height: 250px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .release-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(142, 68, 173, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .release-card:hover .play-overlay {
+            opacity: 1;
+        }
+        
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .release-info {
+            padding: 20px;
+        }
+        
+        .release-info h3 {
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .release-artist {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .release-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        /* Чарты */
+        .charts {
+            background: var(--light);
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .chart {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chart-list {
+            list-style: none;
+        }
+        
+        .chart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+        
+        .chart-item:hover {
+            background: #f9f9f9;
+        }
+        
+        .chart-position {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            color: var(--primary);
+            min-width: 30px;
+        }
+        
+        .chart-info {
+            flex: 1;
+        }
+        
+        .chart-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .chart-artist {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .chart-play {
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        /* Новости */
+        .news {
+            background: white;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .news-excerpt {
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Подписка */
+        .subscribe {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+        
+        .subscribe h2 {
+            color: white;
+        }
+        
+        .subscribe p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+        
+        .subscribe-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .subscribe-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+        }
+        
+        .subscribe-btn {
+            padding: 0 30px;
+            background: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .subscribe-btn:hover {
+            background: #1a252f;
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 10px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+            }
+            
+            .subscribe-input {
+                border-radius: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .subscribe-btn {
+                border-radius: 50px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo"><i class="fas fa-music"></i>MelodyHub</a>
+                <ul class="nav-links">
+                    <li><a href="#new-releases">Новинки</a></li>
+                    <li><a href="#charts">Чарты</a></li>
+                    <li><a href="#news">Новости</a></li>
+                    <li><a href="#subscribe" class="btn">Подписаться</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Герой секция -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="fade-in">Откройте мир музыки с MelodyHub</h1>
+            <p class="fade-in">Самые свежие новинки, актуальные чарты и эксклюзивные музыкальные новости в одном месте. Команда из 200+ профессионалов работает для вас 24/7.</p>
+            <div class="hero-buttons fade-in">
+                <a href="#new-releases" class="btn">Смотреть новинки</a>
+                <a href="#subscribe" class="btn btn-secondary">Начать бесплатно</a>
+            </div>
+            <div class="stats">
+                <div class="stat-item fade-in">
+                    <span class="stat-number">2M+</span>
+                    <span class="stat-text">Треков в каталоге</span>
+                </div>
+                <div class="stat-item fade-in">
+                    <span class="stat-number">500K+</span>
+                    <span class="stat-text">Активных пользователей</span>
+                </div>
+                <div class="stat-item fade-in">
+                    <span class="stat-number">200+</span>
+                    <span class="stat-text">Сотрудников</span>
+                </div>
+                <div class="stat-item fade-in">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-text">Стран</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Новинки -->
+    <section id="new-releases" class="new-releases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Свежие релизы</h2>
+                <a href="#" class="view-all">Все новинки <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="releases-grid">
+                <div class="release-card fade-in">
+                    <div class="release-cover">
+                        <div style="background: #e74c3c; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-compact-disc"></i>
+                        </div>
+                        <div class="play-overlay">
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="release-info">
+                        <h3>Midnight Dreams</h3>
+                        <div class="release-artist">Aurora Sky</div>
+                        <div class="release-date">Вышел 2 дня назад</div>
+                    </div>
+                </div>
+                <div class="release-card fade-in">
+                    <div class="release-cover">
+                        <div style="background: #3498db; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-compact-disc"></i>
+                        </div>
+                        <div class="play-overlay">
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="release-info">
+                        <h3>Electric Pulse</h3>
+                        <div class="release-artist">Neon Waves</div>
+                        <div class="release-date">Вышел 5 дней назад</div>
+                    </div>
+                </div>
+                <div class="release-card fade-in">
+                    <div class="release-cover">
+                        <div style="background: #2ecc71; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-compact-disc"></i>
+                        </div>
+                        <div class="play-overlay">
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="release-info">
+                        <h3>Urban Legends</h3>
+                        <div class="release-artist">City Beats</div>
+                        <div class="release-date">Вышел 1 неделю назад</div>
+                    </div>
+                </div>
+                <div class="release-card fade-in">
+                    <div class="release-cover">
+                        <div style="background: #f39c12; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                            <i class="fas fa-compact-disc"></i>
+                        </div>
+                        <div class="play-overlay">
+                            <div class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="release-info">
+                        <h3>Golden Hour</h3>
+                        <div class="release-artist">Solaris</div>
+                        <div class="release-date">Вышел 3 дня назад</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Чарты -->
+    <section id="charts" class="charts">
+        <div class="container">
+            <h2>Музыкальные чарты</h2>
+            <div class="charts-container">
+                <div class="chart fade-in">
+                    <div class="chart-header">
+                        <h3>Топ-10 сегодня</h3>
+                    </div>
+                    <ul class="chart-list">
+                        <li class="chart-item">
+                            <div class="chart-position">1</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Summer Vibes</div>
+                                <div class="chart-artist">Ocean View</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">2</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Neon Lights</div>
+                                <div class="chart-artist">Electric Pulse</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">3</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Midnight Drive</div>
+                                <div class="chart-artist">Urban Beats</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">4</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Starlight</div>
+                                <div class="chart-artist">Cosmic Sound</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">5</div>
+                            <div class="chart-info">
+                                <div class="chart-title">City Dreams</div>
+                                <div class="chart-artist">Metro Rhythm</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chart fade-in">
+                    <div class="chart-header">
+                        <h3>Популярные альбомы</h3>
+                    </div>
+                    <ul class="chart-list">
+                        <li class="chart-item">
+                            <div class="chart-position">1</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Echoes of Tomorrow</div>
+                                <div class="chart-artist">Future Sound</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">2</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Urban Poetry</div>
+                                <div class="chart-artist">Street Symphony</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">3</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Digital Dreams</div>
+                                <div class="chart-artist">Virtual Reality</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">4</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Melodic Journey</div>
+                                <div class="chart-artist">Harmony Quest</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                        <li class="chart-item">
+                            <div class="chart-position">5</div>
+                            <div class="chart-info">
+                                <div class="chart-title">Rhythm of Life</div>
+                                <div class="chart-artist">Soul Connection</div>
+                            </div>
+                            <div class="chart-play"><i class="fas fa-play"></i></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Новости -->
+    <section id="news" class="news">
+        <div class="container">
+            <div class="section-header">
+                <h2>Музыкальные новости</h2>
+                <a href="#" class="view-all">Все новости <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="news-grid">
+                <div class="news-card fade-in">
+                    <div class="news-image">
+                        <div style="background: #9b59b6; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">15 октября 2023</div>
+                        <h3>Фестиваль электронной музыки объявил хедлайнеров</h3>
+                        <p class="news-excerpt">Крупнейший фестиваль электронной музыки в этом году представил звездный состав хедлайнеров, включая мировых диджеев и продюсеров.</p>
+                        <a href="#" class="read-more">Читать далее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="news-card fade-in">
+                    <div class="news-image">
+                        <div style="background: #e67e22; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">12 октября 2023</div>
+                        <h3>Новый альбом легенды рока выходит после 10-летнего перерыва</h3>
+                        <p class="news-excerpt">Известный рок-музыкант анонсировал выход нового студийного альбома, который станет первым за последние 10 лет.</p>
+                        <a href="#" class="read-more">Читать далее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="news-card fade-in">
+                    <div class="news-image">
+                        <div style="background: #1abc9c; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">8 октября 2023</div>
+                        <h3>Исследование: как музыка влияет на продуктивность</h3>
+                        <p class="news-excerpt">Ученые провели масштабное исследование о влиянии различных музыкальных жанров на рабочую продуктивность.</p>
+                        <a href="#" class="read-more">Читать далее <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подписка -->
+    <section id="subscribe" class="subscribe">
+        <div class="container">
+            <h2>Подпишитесь на обновления</h2>
+            <p>Получайте первыми уведомления о новых релизах, эксклюзивные материалы и специальные предложения. Присоединяйтесь к сообществу MelodyHub!</p>
+            <form class="subscribe-form">
+                <input type="email" class="subscribe-input" placeholder="Ваш email" required>
+                <button type="submit" class="subscribe-btn">Подписаться</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MelodyHub</h3>
+                    <p>Ваш гид в мире музыки. Новинки, чарты и эксклюзивные новости от команды профессионалов.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul class="footer-links">
+                        <li><a href="#new-releases">Новинки</a></li>
+                        <li><a href="#charts">Чарты</a></li>
+                        <li><a href="#news">Новости</a></li>
+                        <li><a href="#">Жанры</a></li>
+                        <li><a href="#">Исполнители</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Компания</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Команда</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Поддержка</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Для исполнителей</a></li>
+                        <li><a href="#">Условия использования</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 MelodyHub. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Мобильное меню
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Закрыть мобильное меню после клика
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Обработка формы подписки
+        document.querySelector('.subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.subscribe-input').value;
+            alert(`Спасибо за подписку! На адрес ${email} отправлено письмо с подтверждением.`);
+            this.reset();
+        });
+
+        // Воспроизведение треков (имитация)
+        document.querySelectorAll('.play-btn, .chart-play').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                alert('Воспроизведение трека...');
+            });
+        });
+
+        // Изменение шапки при скролле
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.98)';
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
